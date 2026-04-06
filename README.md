@@ -67,26 +67,32 @@ The approach is particularly suitable for **publishable architecture and systems
 
 ## Repository Structure
 
-```text
 wcsa-dna-pipeline/
 ├── README.md
 ├── requirements.txt
 ├── data/
 │   └── example/
 ├── src/
+│   ├── config.py
 │   ├── signal_generation.py
 │   ├── basecalling.py
 │   ├── candidate_window.py
+│   ├── traditional_scoring.py
 │   ├── wcsa_engine.py
+│   ├── error_models.py
+│   ├── visualization.py
 │   └── best_hit.py
 ├── scripts/
 │   ├── run_pipeline.py
 │   └── compare_wcsa_vs_baseline.py
 ├── docs/
 │   └── methodology.md
+├── notebooks/
+│   └── DNA_pipeline_wcsa_true_NRT_Hackhathon.ipynb
 ├── results/
 │   ├── figures/
-│   └── tables/
+│   ├── tables/
+│   └── mapped_output/
 └── assets/
     └── wcsa_pipeline_diagram.png
 ```
