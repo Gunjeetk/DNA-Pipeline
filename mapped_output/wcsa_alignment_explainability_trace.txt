@@ -1,0 +1,124 @@
+Starting End-to-End Simulation...
+
+======================================================================
+12. VERY IMPORTANT EXAMPLE VISUALIZATION OF WCSA
+======================================================================
+True Position:      289
+Basecalled Read:    CAGGCGGAAATTGTGAACTTTTAAATTCGATTTACTTAGCTTTTCTATTGATACTAAACT
+Candidate Window:   CATGCGGCAATTGTGAACTTTTAAATTCGATTTTTAGCTTTTCTATTATCCTAAACTTCG
+Encoded Read:       [2, 1, 3, 3, 2, 3, 3, 1, 1, 1, 4, 4, 3, 4, 3, 1, 1, 2, 4, 4, 4, 4, 1, 1, 1, 4, 4, 2, 3, 1, 4, 4, 4, 1, 2, 4, 4, 1, 3, 2, 4, 4, 4, 4, 2, 4, 1, 4, 4, 3, 1, 4, 1, 2, 4, 1, 1, 1, 2, 4]
+Encoded Window:     [2, 1, 4, 3, 2, 3, 3, 2, 1, 1, 4, 4, 3, 4, 3, 1, 1, 2, 4, 4, 4, 4, 1, 1, 1, 4, 4, 2, 3, 1, 4, 4, 4, 4, 4, 1, 3, 2, 4, 4, 4, 4, 2, 4, 1, 4, 4, 1, 4, 2, 2, 4, 1, 1, 1, 2, 4, 4, 2, 3]
+
+Column-by-Column Analysis (first 20 bases):
+Ref Base   | Read Base  | Ref Dig  | Read Dig  | Col Sum (S)  | Event      | Score
+--------------------------------------------------------------------------------
+C          | C          | 2        | 2         | 12           | match      | 2    
+A          | A          | 1        | 1         | 6            | match      | 2    
+T          | G          | 4        | 3         | 19           | mismatch   | -1   
+G          | G          | 3        | 3         | 18           | match      | 2    
+C          | C          | 2        | 2         | 12           | match      | 2    
+G          | G          | 3        | 3         | 18           | match      | 2    
+G          | G          | 3        | 3         | 18           | match      | 2    
+C          | A          | 2        | 1         | 7            | mismatch   | -1   
+A          | A          | 1        | 1         | 6            | match      | 2    
+A          | A          | 1        | 1         | 6            | match      | 2    
+T          | T          | 4        | 4         | 24           | match      | 2    
+T          | T          | 4        | 4         | 24           | match      | 2    
+G          | G          | 3        | 3         | 18           | match      | 2    
+T          | T          | 4        | 4         | 24           | match      | 2    
+G          | G          | 3        | 3         | 18           | match      | 2    
+A          | A          | 1        | 1         | 6            | match      | 2    
+A          | A          | 1        | 1         | 6            | match      | 2    
+C          | C          | 2        | 2         | 12           | match      | 2    
+T          | T          | 4        | 4         | 24           | match      | 2    
+T          | T          | 4        | 4         | 24           | match      | 2    
+
+Final Aggregated Window Score: 40
+Best Traditional Position:     289 (Score: 57)
+Best WCSA Position:            289 (Score: 40)
+======================================================================
+
+====================================================
+13. REQUIRED CONSOLE SUMMARY
+====================================================
+Total Reads Generated:         60
+Reads Passing QC:              60
+Candidate Windows Examined:    741
+Scoring Operations (cols):     2667600
+--------------------------------------------------
+Total Runtime (Traditional):   0.2934 sec
+Total Runtime (WCSA):          0.1074 sec
+Speedup:                       2.73x
+--------------------------------------------------
+Total Energy (Traditional):    2.2127 Joules
+Total Energy (WCSA):           0.6799 Joules
+Energy per Read (WCSA):        0.0113 J/read
+Energy Reduction Factor:       3.25x
+Percent Energy Savings:        69.27 %
+--------------------------------------------------
+Mapping Accuracy (Trad):       53.3% (Tol+-2: 76.7%)
+Mapping Accuracy (WCSA):       53.3% (Tol+-2: 76.7%)
+Average Position Error (WCSA): 11.73 bases
+Throughput (WCSA):             558.7 reads/sec
+====================================================
+
+
+
+=== FAIRNESS CHECKS ===
+A. Same reads:
+   Total raw reads: 60
+   QC-passed reads: 60
+   Sample true positions (QC-passed): [289, 421, 493, 407, 301]
+   Sample true sequences (QC-passed): ['CATGCGGCAATTGTGAACTTTTAAATTCGATTTACTTAGCTTTTCTATTGATCCTAAACT']
+
+B. Same QC pass set:
+   Sample QC signatures: [(289, 'CAGGCGGAAATTGTGAACTTTTAAATTCGATTTACTTAGCTTTTCTATTGATACTAAACT'), (421, 'GATCAGATTACAAATCGGTGTTGGTTGTGCCAGTGCCCCGAAGGAAGACTGGTGCTGTTC'), (493, 'ACGCCCAGACTAGACACACTCTTCAAGTCGTGTTAATAAAGGAGTACGATTAAGTCGCTG'), (407, 'GGCTTGAAAACTACGAGCAGATTAGATGAATCGTGTTGGGTGTTCCAGGCACCGGAAGCG'), (301, 'GTGAACTTTTAAATTCGATTTTTAGCTTTGCGATTATCCTAACCTTCGCTTTATTCACCC')]
+   QC is computed once and shared by both pipelines -> PASS
+
+C. Same candidate windows:
+   Number of candidate windows: 741
+   Candidate window length: 60
+   Encoded WCSA matrix matches candidate windows (sample): True
+
+D. Only scorer differs:
+   Traditional score = +2 for match, -1 for mismatch
+   WCSA scores are derived from a precomputed LUT based on weighted column sums, allowing for differentiated mismatch penalties.
+   RESULT: WCSA scoring logic now explicitly differs from traditional, allowing for new ranking behavior.
+
+
+12. VERY IMPORTANT EXAMPLE VISUALIZATION OF WCSA
+======================================================================
+True Position:      482
+Basecalled Read:    CCGCAAGAGTACGGTGTCAAGTAATTCCCTCAGCTAGCTCCCTCACCTCACCTACACCCG
+Candidate Window:   CCGCAAGAGTACCGTGTCAAGTAATTCCCTCAGCTAGCTCCCTCAGCTCACCTACACCCG
+Encoded Read:       [2, 2, 3, 2, 1, 1, 3, 1, 3, 4, 1, 2, 3, 3, 4, 3, 4, 2, 1, 1, 3, 4, 1, 1, 4, 4, 2, 2, 2, 4, 2, 1, 3, 2, 4, 1, 3, 2, 4, 2, 2, 2, 4, 2, 1, 2, 2, 4, 2, 1, 2, 2, 4, 1, 2, 1, 2, 2, 2, 3]
+Encoded Window:     [2, 2, 3, 2, 1, 1, 3, 1, 3, 4, 1, 2, 2, 3, 4, 3, 4, 2, 1, 1, 3, 4, 1, 1, 4, 4, 2, 2, 2, 4, 2, 1, 3, 2, 4, 1, 3, 2, 4, 2, 2, 2, 4, 2, 1, 3, 2, 4, 2, 1, 2, 2, 4, 1, 2, 1, 2, 2, 2, 3]
+
+Column-by-Column Analysis (first 20 bases):
+Ref Base   | Read Base  | Ref Dig  | Read Dig  | Col Sum (S)  | Event      | Score
+--------------------------------------------------------------------------------
+C          | C          | 2        | 2         | 12           | match      | 2    
+C          | C          | 2        | 2         | 12           | match      | 2    
+G          | G          | 3        | 3         | 18           | match      | 2    
+C          | C          | 2        | 2         | 12           | match      | 2    
+A          | A          | 1        | 1         | 6            | match      | 2    
+A          | A          | 1        | 1         | 6            | match      | 2    
+G          | G          | 3        | 3         | 18           | match      | 2    
+A          | A          | 1        | 1         | 6            | match      | 2    
+G          | G          | 3        | 3         | 18           | match      | 2    
+T          | T          | 4        | 4         | 24           | match      | 2    
+A          | A          | 1        | 1         | 6            | match      | 2    
+C          | C          | 2        | 2         | 12           | match      | 2    
+C          | G          | 2        | 3         | 17           | mismatch   | -1   
+G          | G          | 3        | 3         | 18           | match      | 2    
+T          | T          | 4        | 4         | 24           | match      | 2    
+G          | G          | 3        | 3         | 18           | match      | 2    
+T          | T          | 4        | 4         | 24           | match      | 2    
+C          | C          | 2        | 2         | 12           | match      | 2    
+A          | A          | 1        | 1         | 6            | match      | 2    
+A          | A          | 1        | 1         | 6            | match      | 2    
+
+Final Aggregated Window Score: 114
+Best Traditional Position:     482 (Score: 114)
+Best WCSA Position:            482 (Score: 114)
+======================================================================
