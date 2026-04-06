@@ -189,8 +189,10 @@ The repository is structured for:
 ---
 
 ## Author
-**Gunjeet Kaur**  
-PhD Researcher – Electrical & Computer Engineering  
+Gunjeet Kaur
+PhD Researcher – Electrical & Computer Engineering ,UMKC 
+Dr. Mostafizur Rehman
+Faculty Advisor -  Electrical & Computer Engineering ,UMKC
 DNA sequencing acceleration • WCSA • architecture research
 
 ---
