@@ -1,86 +1,79 @@
-# DNA-Pipeline
-WCSA DNA Sequencing Pipeline
-# WCSA DNA Sequencing Pipeline
+# WCSA DNA Sequencing Pipeline  
+**NRT Researcher-a-thon Submission**
 
-A research-oriented DNA sequencing and candidate alignment pipeline developed for the **NRT Researcher-a-thon**. This repository demonstrates an enhanced sequencing workflow with a **Weighted Column-Sum Alignment (WCSA) scoring engine** integrated into the mapping stage to explore a **hardware-friendly alternative to conventional alignment scoring**.
+A research-oriented DNA sequencing and candidate alignment prototype developed for the **NRT Researcher-a-thon**. This repository demonstrates a **traditional DNA sequencing workflow enhanced with a Weighted Column-Sum Alignment (WCSA) scoring engine**, designed as a **hardware-friendly alternative to conventional alignment scoring**.
 
 ---
 
 ## Problem
-
-Traditional DNA sequencing analysis pipelines spend significant compute time in the **candidate evaluation and alignment stage**, especially after basecalling and candidate window generation. As read volumes grow, this stage becomes a major bottleneck for efficient real-time genomic analysis.
+Traditional DNA sequencing pipelines spend significant compute time in the **candidate evaluation and alignment stage**, especially after basecalling and candidate window generation. As read volumes increase, this stage becomes a major bottleneck for **real-time genomic analysis**.
 
 ---
 
 ## Innovation
+This project introduces **WCSA (Weighted Column-Sum Alignment)**, a novel scoring mechanism that reformulates alignment-event detection into a **column-wise weighted sum arithmetic operation**.
 
-This project introduces **WCSA (Weighted Column-Sum Alignment)**, a novel scoring mechanism that reformulates alignment-event detection into a **column-wise weighted sum operation**.
-
-Instead of relying on conventional string-by-string comparison or dynamic programming at every step, WCSA converts aligned bases into numeric digits and computes:
+Instead of relying on conventional dynamic programming or direct string-by-string comparison, WCSA converts aligned bases into numeric digits and computes:
 
 ```text
 S = ref × 1 + read × α
 ```
 
-where:
-
-* `ref` = encoded reference base digit
-* `read` = encoded read base digit
-* `α` = row-weight multiplier (default 5)
+Where:
+- `ref` = encoded reference base digit
+- `read` = encoded read base digit
+- `α` = row-weight multiplier (`α = 5`)
 
 This enables:
-
-* simplified match/mismatch/gap decoding
-* hardware-friendly arithmetic blocks
-* efficient candidate scoring
-* future accelerator integration opportunities
+- simplified match / mismatch decoding
+- lightweight arithmetic scoring
+- hardware-friendly accelerator design
+- efficient candidate evaluation
+- future FPGA / ASIC mapping opportunities
 
 ---
 
 ## Why It Matters
+WCSA is designed as a **compute-efficient DNA alignment scoring prototype** with strong relevance to:
 
-WCSA is designed as a **research prototype for compute-efficient DNA alignment scoring**, with strong relevance to:
+- nanopore-style sequencing pipelines
+- hardware acceleration research
+- near-memory genomic compute
+- edge and handheld sequencers
+- publishable architecture + systems research
 
-* nanopore-style streaming pipelines
-* hardware acceleration research
-* near-memory genomic compute architectures
-* low-power portable sequencers
-* future handheld and edge sequencing devices
-
-The approach is particularly suitable for **publishable architecture and systems research**, where algorithm–hardware co-design is central.
+This work is especially suitable for **algorithm–hardware co-design exploration**.
 
 ---
 
 ## Key Features
-
-* End-to-end toy DNA sequencing pipeline
-* Synthetic nanopore-style signal generation
-* Lightweight basecalling stage
-* Candidate window generation
-* **WCSA scoring engine**
-* Best-hit selection
-* Baseline vs WCSA comparison
-* Timing visualization and result plots
-* Competition-ready reproducible workflow
+- End-to-end toy DNA sequencing workflow
+- Synthetic nanopore-like signal generation
+- Lightweight basecalling
+- Candidate window generation
+- Traditional scoring baseline
+- **WCSA scoring engine**
+- Runtime comparison metrics
+- Explainability alignment trace
+- Competition-ready reproducible notebook + Python script
 
 ---
 
 ## Repository Structure
-
+```text
 wcsa-dna-pipeline/
 ├── README.md
 ├── Requirements.txt
 ├── DNA_pipeline_wcsa_NRT_Hackhathon.ipynb
 ├── WCSA_vs_Traditional_DNA_pipeline.py
 ├── mapped_output.txt
-├── pipeline_comparison_metrics.png
+└── pipeline_comparison_metrics.png
 ```
 
 ---
 
 ## Pipeline Overview
-
-The current prototype follows this system flow:
+The current prototype follows this workflow:
 
 ```text
 Raw Signal Acquisition
@@ -91,9 +84,9 @@ Basecalling
         ↓
 Read Quality Control
         ↓
-Reference Indexing
-        ↓
 Candidate Window Generation
+        ↓
+Traditional Scoring
         ↓
 WCSA Scoring Engine
         ↓
@@ -104,30 +97,27 @@ Final Mapped Read Output
 
 ---
 
-## WCSA Core Scoring Logic
-
+## WCSA Core Logic
 The WCSA engine performs four internal stages:
 
-1. **Base Digit Encoder**
+1. **Base Digit Encoder**  
    `A,C,G,T,- → 1,2,3,4,0`
 
-2. **Column-Sum Generator**
+2. **Column-Sum Generator**  
    `S = ref + α × read`
 
-3. **Alignment Event Decoder**
+3. **Alignment Event Decoder**  
    Detects:
+   - match
+   - mismatch
+   - gap
 
-   * match
-   * mismatch
-   * gap
-
-4. **Window Score Aggregator**
-   Computes cumulative alignment score across the candidate window.
+4. **Window Score Aggregator**  
+   Computes cumulative candidate score.
 
 ---
 
 ## Installation
-
 Clone the repository:
 
 ```bash
@@ -138,95 +128,74 @@ cd wcsa-dna-pipeline
 Install dependencies:
 
 ```bash
-pip install -r requirements.txt
+pip install -r Requirements.txt
 ```
 
 ---
 
 ## Quick Start
-
-Run the full WCSA pipeline:
-
-```bash
-python scripts/run_pipeline.py
-```
-
-Run baseline comparison:
+Run the complete WCSA vs Traditional comparison pipeline:
 
 ```bash
-python scripts/compare_wcsa_vs_baseline.py
+python WCSA_vs_Traditional_DNA_pipeline.py
 ```
 
 ---
 
-## Example Output
+## Example Outputs
+This repository currently includes:
 
-Generated outputs include:
+- `mapped_output.txt` → best-hit alignment output
+- `pipeline_comparison_metrics.png` → runtime and scoring comparison
+- notebook explainability traces
+- WCSA column-by-column arithmetic validation
 
-* mapped read summaries
-* candidate alignment scores
-* stage-wise timing tables
-* runtime comparison plots
-* WCSA score distributions
-* pipeline architecture figures
-
-All generated files are saved under:
-
-```text
-results/
-```
+These outputs are intentionally stored in the **repository root for quick hackathon review**.
 
 ---
 
 ## Evaluation Goals
+This repository evaluates WCSA against a traditional scoring baseline using:
 
-This repository is designed to evaluate WCSA against a traditional candidate scoring pipeline using:
-
-* execution time
-* scoring complexity
-* candidate evaluation behavior
-* hardware suitability
-* scalability potential
-
-Future comparisons may extend toward:
-
-* GENPIP-inspired pipelines
-* minimap2-style seed-and-extend baselines
-* accelerator-aware genomic workflows
+- execution time
+- scoring complexity
+- candidate scoring behavior
+- explainability
+- hardware suitability
+- scalability potential
 
 ---
 
 ## Competition Context
-
-Developed for the **NRT Researcher-a-thon** as a research prototype demonstrating a novel **DNA alignment scoring architecture**.
+Developed for the **NRT Researcher-a-thon** as a **research prototype for compute-efficient DNA alignment scoring**.
 
 The repository is structured for:
-
-* quick judge onboarding
-* reproducible execution
-* clean research communication
-* future publication extension
+- quick judge onboarding
+- easy execution
+- reproducible notebook validation
+- clean research communication
+- future publication extension
 
 ---
 
 ## Future Work
-
-* larger synthetic reference genomes
-* minimizer-based candidate generation
-* streaming chunk-level processing
-* ONT-style signal chunk integration
-* FPGA / ASIC scoring block mapping
-* near-memory accelerator simulation
-* handheld device deployment feasibility study
+- larger synthetic reference genomes
+- minimizer-based candidate generation
+- indel-aware robustness testing
+- FPGA / ASIC WCSA mapping
+- near-memory accelerator simulation
+- handheld sequencer deployment feasibility
 
 ---
 
 ## Author
-
-**Gunjeet Kaur 
-**
-PhD Researcher – Electrical & Computer Engineering
+**Gunjeet Kaur**  
+PhD Researcher – Electrical & Computer Engineering  
 DNA sequencing acceleration • WCSA • architecture research
+
+---
+
+
 
 ---
 
