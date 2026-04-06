@@ -121,7 +121,7 @@ The WCSA engine performs four internal stages:
 Clone the repository:
 
 ```bash
-git clone https://github.com/<your-username>/wcsa-dna-pipeline.git
+git clone https://github.com/gunjeetk/wcsa-dna-pipeline.git
 cd wcsa-dna-pipeline
 ```
 
